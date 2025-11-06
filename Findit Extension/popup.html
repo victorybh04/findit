@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>찾자! Findit</title>
+    <link href="css/popup.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="title">찾자!</h1>
+        <div id="public-setting"></div>
+    </div>
+    <div class="container">
+        <!-- <hr> -->
+        <div class="search-settings">
+            <div>
+                <p id="product-title" class="primary-text">상품명 로딩 중...</p>
+                <p id="compare-amount" class="sub-text">8개 쇼핑몰 비교</p>
+            </div>
+            <div class="toggles">
+                <label >
+                    <span class="sub-text">배송비 포함</span>
+                    <input role="switch" type="checkbox" class="shipping-fee-toggle">
+                </label>
+                <label>
+                    <span class="sub-text">카드할인 포함</span>
+                    <input role="switch" type="checkbox" class="card-discount-toggle">
+                </label>
+            </div>
+
+        </div>
+        <ul class="result-list">
+            <p id="loading-message" class="sub-text" style="padding: 20px; text-align: center">상품 정보를 검색 중입니다.</p>
+
+        </ul>
+    </div>
+
+    <script src="/js/popup.js"></script>
+</body>
+
+</html>

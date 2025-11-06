@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "version": "0.1",
+    "name": "찾자! (findit!)",
+    "description": "상품 페이지에서 다른 쇼핑몰의 가격을 모두 검색해 줍니다.",
+    "default-locale": "kr",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://localhost/*",
+        "https://localhost/*",
+        "http://127.0.0.1/*",
+        "https://127.0.0.1/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "48": "img/icon48.png",
+            "96": "img/icon96.png"
+        }
+    },
+    "icons": {
+        "48": "img/icon48.png",
+        "96": "img/icon96.png"
+    }
+}
