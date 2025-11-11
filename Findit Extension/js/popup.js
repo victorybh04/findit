@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         chrome.scripting.executeScript(
             {
-                target: { tabId: currentTab.id }, // 현재 탭 페이지에
-                files: ['/js/content.js']              // 'content.js' 파일 주입
+                target: { tabId: currentTab.id }, // 현재 탭 페이지에 content.js 파일 주입
+                files: ['/js/content.js']
             },
             () => {
                 // 주입 단계에서 에러가 났는지 확인 (예: 권한 문제)
@@ -37,26 +37,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log(response);
                         if (chrome.runtime.lastError) { //에러가 있었다면
                             console.warn('찾자!: content.js로부터 응답을 받지 못했습니다.', chrome.runtime.lastError.message);
-                            updateTitle('상품 정보를 찾을 수 없습니다.');
+                            updateTitle('페이지에서 상품 정보를 찾을 수 없습니다.');
                             return;
                         }
-
-                        if (response && response.title && response.title !== '상품명 찾기 실패') {
-                            updateTitle(response.title);
-
-                            const encodedTitle = encodeURIComponent(response.title);
-                            fetch(serverIP + '/search?q=' + encodedTitle)
-                                .then(response => response.json())
-                                .then(data => {
-                                    const results = data.results;
-                                    if (results.length > 0) {
-                                        renderResults(results);
-                                    } else {
-                                        document.getElementById('loading-message').innerText('검색 결과가 없습니다.');
-                                    }
-                                });
-                        } else { // 응답은 왔지만, content.js가 상품명을 못 찾았을 때
-                            updateTitle('상품명을 찾을 수 없습니다.');
+                        switch (response.title) {
+                            case '상품명 찾기 실패':
+                                updateTitle('상품명을 찾을 수 없습니다.');
+                                break;
+                            case '쇼핑몰 페이지가 아닙니다.':
+                                updateTitle('쇼핑몰 페이지가 아닙니다.');
+                                break;
+                            default:
+                                updateTitle(response.title);
+                                const encodedTitle = encodeURIComponent(response.title);
+                                fetch(serverIP + '/search?q=' + encodedTitle) //백엔드 서버에 get 요청
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const results = data.results;
+                                        if (results.length > 0) {
+                                            document.querySelector('.result-list').replaceChildren();
+                                            renderResults(results);
+                                        } else {
+                                            document.getElementById('loading-message').innerText('검색 결과가 없습니다.');
+                                        }
+                                    });
                         }
                     }
                 );

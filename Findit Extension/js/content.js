@@ -34,7 +34,3 @@ function getProductTitle() { // 현재 페이지에서 상품명 (title)을 반�
 
     return title.trim();
 }
-
-function getData(){ // 서버에서 JSON 데이터 가져와 반환
-
-}
