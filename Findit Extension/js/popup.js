@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentTab.id, // 현재 탭 정보
                     { type: 'GET_PRODUCT_TITLE' },
                     (response) => {
-                        console.log(response);
+                        // console.log(response);
                         if (chrome.runtime.lastError) { //에러가 있었다면
                             console.warn('찾자!: content.js로부터 응답을 받지 못했습니다.', chrome.runtime.lastError.message);
                             updateTitle('페이지에서 상품 정보를 찾을 수 없습니다.');
@@ -58,8 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                             document.querySelector('.result-list').replaceChildren();
                                             renderResults(results);
                                         } else {
-                                            document.getElementById('loading-message').innerText('검색 결과가 없습니다.');
+                                            document.getElementById('loading-message').innerText = '검색 결과가 없습니다.';
                                         }
+                                    })
+                                    .catch(error => {
+                                        document.getElementById('loading-message').innerText = '서버와의 연결에 실패했습니다.';
+                                        console.warn('서버와의 연결에 실패했습니다.', error);
                                     });
                         }
                     }
