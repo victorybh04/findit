@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 const cors = require('cors');
 
 const port = 3000;
-const FAKE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36';
+const FAKE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36';
 
 app.use(cors());
 
@@ -22,19 +22,20 @@ app.get('/search', async (req, res) => { // '/search' api endpoint
 
     try {
         const gmarketUrl = `https://browse.gmarket.co.kr/search?keyword=${encodeURIComponent(searchQuery)}`;
+        const coupangUrl = `https://www.coupang.com/np/search?&q=${encodeURIComponent(searchQuery)}`;
         // task: 검색 쿼리 최적화 (쓸모없는 부분 삭제, 브랜드 및 모델명 강조 검색)
 
         const response = await axios.get(gmarketUrl, {
             headers: {
                 'User-Agent': FAKE_USER_AGENT,
                 'Referer': 'https://www.gmarket.co.kr/'
-            }
+            },
+            timeout: 5000
         });
         const html = response.data;
-
         const $ = cheerio.load(html);
 
-        const productItems = $('div.box__item-container');
+        const productItems = $('div.box__item-container'); // 지마켓 검색결과 - 상품명 컨테이너 셀렉터
         const crawledResult = [];
 
         productItems.each((index, element) => {
@@ -52,37 +53,12 @@ app.get('/search', async (req, res) => { // '/search' api endpoint
             });
         });
         // task: 최적의 일치상품 하나만 찾아내는 로직 필요
-
         res.json({ results: crawledResult });
     } 
     catch (error) {
         console.error('크롤링 중 오류 발생', error.message);
         res.json({ results: [] });
     }
-
-//     const mockResults = {
-//     "results": [
-//         {
-//             "storeName": ["쿠팡", "coupang"],
-//             "price": 245000,
-//             "shippingFeeText": "🛒 무료배송",
-//             "url": "https://www.coupang.com/"
-//         },
-//         {
-//             "storeName": ["알리익스프레스", "aliexpress"],
-//             "price": 255000,
-//             "shippingFeeText": "🛒 3000원",
-//             "url": "https://www.aliexpress.com/"
-//         },
-//         {
-//             "storeName": ["11번가", "11st"],
-//             "price": 265000,
-//             "shippingFeeText": "🛒 무료배송",
-//             "url": "https://www.11st.co.kr/"
-//         }
-//     ]
-// };
-// res.json(mockResults);
 });
 
 app.listen(port, () => {

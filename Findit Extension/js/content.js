@@ -24,11 +24,10 @@ function getProductTitle() { // 현재 페이지에서 상품명 (title)을 반�
         } else if (hostname.includes('aliexpress.com')) {
             title = document.querySelector('.title--wrap--UUHae_g').innerText;
         } else {
-            //title = document.querySelector('h1').innerText;
             title = '쇼핑몰 페이지가 아닙니다.'
         }
     } catch (e) {
-        console.warn('핫딜 파인더 : 상품명을 찾을 수 없습니다.', e);
+        console.warn('Findit : 상품명을 찾을 수 없습니다.', e);
         title = '상품명 찾기 실패';
     }
 

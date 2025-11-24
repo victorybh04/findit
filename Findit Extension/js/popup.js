@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             updateTitle('페이지에서 상품 정보를 찾을 수 없습니다.');
                             return;
                         }
-                        switch (response.title) {
+                        switch (response.title) { // content.js의 응답으로 에러 처리
                             case '상품명 찾기 실패':
                                 updateTitle('상품명을 찾을 수 없습니다.');
                                 break;
@@ -107,3 +107,5 @@ function renderResults(resultsArray) {
         resultList.appendChild(productCard);
     });
 }
+
+
