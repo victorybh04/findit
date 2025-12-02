@@ -104,6 +104,12 @@ function renderResults(resultsArray) {
             <span class="link-box"><div class="link"></div></span>
         </div>
             `;
+
+        const linkBox = productCard.querySelector('.link-box');
+        linkBox.addEventListener('click', () => {
+            chrome.tabs.create({url: i.url});
+        })
+
         resultList.appendChild(productCard);
     });
 }

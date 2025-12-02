@@ -3,7 +3,6 @@
     "version": "0.1",
     "name": "찾자! (findit!)",
     "description": "상품 페이지에서 다른 쇼핑몰의 가격을 모두 검색해 줍니다.",
-    "default-locale": "kr",
     "permissions": [
         "activeTab",
         "scripting"

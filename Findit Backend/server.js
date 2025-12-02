@@ -23,7 +23,7 @@ app.get('/search', async (req, res) => { // '/search' api endpoint
     try {
         const gmarketUrl = `https://browse.gmarket.co.kr/search?keyword=${encodeURIComponent(searchQuery)}`;
         const coupangUrl = `https://www.coupang.com/np/search?&q=${encodeURIComponent(searchQuery)}`;
-        // task: 검색 쿼리 최적화 (쓸모없는 부분 삭제, 브랜드 및 모델명 강조 검색)
+        // TODO: 검색 쿼리 최적화 (쓸모없는 부분 삭제, 브랜드 및 모델명 강조 검색)
 
         const response = await axios.get(gmarketUrl, {
             headers: {
@@ -52,7 +52,7 @@ app.get('/search', async (req, res) => { // '/search' api endpoint
                 shippingFeeText: shippingFeeText
             });
         });
-        // task: 최적의 일치상품 하나만 찾아내는 로직 필요
+        // TODO: 최적의 일치상품 하나만 찾아내는 로직 필요
         res.json({ results: crawledResult });
     } 
     catch (error) {
